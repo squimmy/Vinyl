@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Mono.Cecil;
 
 namespace Vinyl.Transformer
 {
@@ -18,7 +19,17 @@ namespace Vinyl.Transformer
                                    where method.IsConstructor
                                    select method).Single();
                 foreach (var param in constructor.Parameters)
+                {
+                    var fieldName = StringUtils.FirstCharToUpper(param.Name);
+                    var field = new FieldDefinition(fieldName,
+                                                    FieldAttributes.Public |
+                                                    FieldAttributes.InitOnly,
+                                                    param.ParameterType);
+                    t.Fields.Add(field);
                     Console.WriteLine(param.Name);
+                }
+
+                a.Write(args[0]);
             }
         }
     }
