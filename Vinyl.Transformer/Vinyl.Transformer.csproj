@@ -51,4 +51,10 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Vinyl\Vinyl.csproj">
+      <Project>{FC8B2571-CDA8-4C96-BEBD-407946B3AC8F}</Project>
+      <Name>Vinyl</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
