@@ -14,7 +14,11 @@ namespace Vinyl.Transformer
                               where type.CustomAttributes.Any(x => x.AttributeType.FullName == typeof(Vinyl.RecordAttribute).FullName)
                               select type)
             {
-                Console.WriteLine(t.FullName);
+                var constructor = (from method in t.Methods
+                                   where method.IsConstructor
+                                   select method).Single();
+                foreach (var param in constructor.Parameters)
+                    Console.WriteLine(param.Name);
             }
         }
     }
