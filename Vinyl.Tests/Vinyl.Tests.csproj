@@ -38,4 +38,7 @@
     <Compile Include="Test.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <EmbeddedResource Include="Test.dll" />
+  </ItemGroup>
 </Project>
