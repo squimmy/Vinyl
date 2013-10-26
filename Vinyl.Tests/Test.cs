@@ -27,8 +27,16 @@ namespace Vinyl.Tests
         }
 
         [Test()]
-        public void TestCase()
+        public void Fields_Are_Generated_For_Each_Constructor_Arg()
         {
+            var person = testAssembly.GetType("Test.Person");
+
+            var fields = from field in person.GetFields()
+                         select Tuple.Create(field.FieldType, field.Name.ToLower());
+
+            var constructorArgs = from param in person.GetConstructors().Single().GetParameters()
+                                  select Tuple.Create(param.ParameterType, param.Name.ToLower());
+            CollectionAssert.AreEqual(constructorArgs, fields);
         }
 
         [TearDown()]

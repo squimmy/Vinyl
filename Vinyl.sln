@@ -27,6 +27,6 @@ Global
 		{FC8B2571-CDA8-4C96-BEBD-407946B3AC8F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Vinyl\Vinyl.csproj
+		StartupItem = Vinyl.Tests\Vinyl.Tests.csproj
 	EndGlobalSection
 EndGlobal
