@@ -1,4 +1,5 @@
 using System;
+using System.CodeDom.Compiler;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -14,15 +15,27 @@ namespace Vinyl.Tests
         [SetUp()]
         public void SetUp()
         {
+            var thisAssembly = Assembly.GetExecutingAssembly();
             var outputDirectory = "Test.dll";
-            var a = Assembly.GetExecutingAssembly();
-            var s = a.GetManifestResourceStream("Vinyl.Tests.Test.dll");
-            using (var sw = File.Create(outputDirectory))
+
+            var codeProvider = new Microsoft.CSharp.CSharpCodeProvider();
+            var options = new CompilerParameters();
+            options.OutputAssembly = outputDirectory;
+            options.ReferencedAssemblies.Add("Vinyl");
+
+            using (var source = thisAssembly.GetManifestResourceStream("Vinyl.Tests.SampleCode.cs"))
+            using (var sr = new StreamReader(source))
             {
-                s.Seek(0, SeekOrigin.Begin);
-                s.CopyTo(sw);
+                var compileResult = codeProvider.CompileAssemblyFromSource(options, sr.ReadToEnd());
+                if (compileResult.Errors.HasErrors)
+                    throw new Exception(
+                        "Compilation failed: \n" +
+                        string.Join("\n", from error in compileResult.Errors.Cast<CompilerError>()
+                                          select "\t" + error.ToString()));
             }
+
             Vinyl.Transformer.MainClass.Main(new [] {outputDirectory});
+
             testAssembly = Assembly.LoadFile(outputDirectory);
         }
 

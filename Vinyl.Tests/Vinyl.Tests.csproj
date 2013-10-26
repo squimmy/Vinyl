@@ -47,5 +47,9 @@
       <Project>{9A5A4BEA-5E22-4212-9628-380F5D7649E6}</Project>
       <Name>Vinyl.Transformer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Vinyl\Vinyl.csproj">
+      <Project>{FC8B2571-CDA8-4C96-BEBD-407946B3AC8F}</Project>
+      <Name>Vinyl</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
