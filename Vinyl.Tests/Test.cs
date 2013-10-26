@@ -39,6 +39,17 @@ namespace Vinyl.Tests
             CollectionAssert.AreEqual(constructorArgs, fields);
         }
 
+        [Test()]
+        public void Construtor_Args_Are_Assigned_To_Fields()
+        {
+            var person = testAssembly.GetType("Test.Person");
+            var instance = Activator.CreateInstance(person, new object[] {42, "Joe"});
+            var age = person.GetField("Age").GetValue(instance);
+            var name = person.GetField("Name").GetValue(instance);
+            Assert.AreEqual(42, age);
+            Assert.AreEqual("Joe", name);
+        }
+
         [TearDown()]
         public void TearDown()
         {
