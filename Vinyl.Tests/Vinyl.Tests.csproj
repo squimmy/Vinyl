@@ -40,9 +40,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <EmbeddedResource Include="Test.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="SampleCode.txt" />
+    <EmbeddedResource Include="SampleCode.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Vinyl.Transformer\Vinyl.Transformer.csproj">
