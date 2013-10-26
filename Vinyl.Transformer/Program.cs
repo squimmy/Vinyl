@@ -5,7 +5,7 @@ using Mono.Cecil.Cil;
 
 namespace Vinyl.Transformer
 {
-    class MainClass
+    public class MainClass
     {
         public static void Main(string[] args)
         {
