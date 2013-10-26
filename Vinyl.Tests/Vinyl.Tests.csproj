@@ -41,4 +41,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Test.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="SampleCode.txt" />
+  </ItemGroup>
 </Project>
