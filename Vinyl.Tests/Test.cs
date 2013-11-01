@@ -71,6 +71,13 @@ namespace Vinyl.Tests
                 Assert.IsTrue(field.IsInitOnly);
         }
 
+        [Test()]
+        public void Classes_Are_Sealed()
+        {
+            var person = testAssembly.GetType("Test.Person");
+            Assert.IsTrue(person.IsSealed);
+        }
+
         [TearDown()]
         public void TearDown()
         {
