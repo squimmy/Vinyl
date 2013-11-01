@@ -3,8 +3,7 @@ namespace Test
     [Vinyl.Record]
     public class Person
     {
-        public Person(int age,
-                      string name)
-        { }
+        public int Age;
+        public string Name;
     }
 }
