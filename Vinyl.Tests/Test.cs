@@ -63,6 +63,14 @@ namespace Vinyl.Tests
             Assert.AreEqual("Joe", name);
         }
 
+        [Test()]
+        public void Fields_Are_Readonly()
+        {
+            var person = testAssembly.GetType("Test.Person");
+            foreach (var field in person.GetFields())
+                Assert.IsTrue(field.IsInitOnly);
+        }
+
         [TearDown()]
         public void TearDown()
         {
