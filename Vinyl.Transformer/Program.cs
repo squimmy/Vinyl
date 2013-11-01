@@ -20,13 +20,16 @@ namespace Vinyl.Transformer
                                    where method.IsConstructor
                                    select method).Single();
                 int argCount = 0;
-                foreach (var param in constructor.Parameters)
+                foreach (FieldDefinition field in t.Fields)
                 {
-                    var fieldName = StringUtils.FirstCharToUpper(param.Name);
-                    var field = new FieldDefinition(fieldName,
-                                                    FieldAttributes.Public |
-                                                    FieldAttributes.InitOnly,
-                                                    param.ParameterType);
+                    field.IsInitOnly = true;
+
+                    var paramName = StringUtils.FirstCharToLower(field.Name);
+                    var param = new ParameterDefinition(paramName,
+                                                        ParameterAttributes.None,
+                                                        field.FieldType);
+                    constructor.Parameters.Add(param);
+
                     ++argCount;
                     Instruction loadArg;
                     if (argCount == 1)
@@ -38,7 +41,6 @@ namespace Vinyl.Transformer
                     else
                         loadArg = Instruction.Create(OpCodes.Ldarg_S, argCount);
 
-                    t.Fields.Add(field);
                     var instructions = constructor.Body.Instructions;
 
                     instructions.InsertRange(instructions.Count - 1,
