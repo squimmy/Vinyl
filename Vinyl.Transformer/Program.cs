@@ -48,6 +48,8 @@ namespace Vinyl.Transformer
                         loadArg,
                         Instruction.Create(OpCodes.Stfld, field));
                 }
+
+                t.IsSealed = true;
             }
             a.Write(args[0]);
         }
