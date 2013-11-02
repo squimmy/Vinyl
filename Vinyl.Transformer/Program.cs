@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Runtime.Serialization;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -16,6 +17,13 @@ namespace Vinyl.Transformer
                               where type.CustomAttributes.Any(x => x.AttributeType.FullName == typeof(Vinyl.RecordAttribute).FullName)
                               select type)
             {
+
+                var dataContractConstructor = t.Module.Import(typeof(DataContractAttribute).GetConstructors().Single());
+                var dataContract = new CustomAttribute(dataContractConstructor);
+
+                var dataMemberConstructor = t.Module.Import(typeof(DataMemberAttribute).GetConstructors().Single());
+                var dataMember = new CustomAttribute(dataMemberConstructor);
+
                 MethodDefinition constructor = (from method in t.Methods
                                    where method.IsConstructor
                                    select method).Single();
@@ -47,9 +55,12 @@ namespace Vinyl.Transformer
                         Instruction.Create(OpCodes.Ldarg_0),
                         loadArg,
                         Instruction.Create(OpCodes.Stfld, field));
+
+                    field.CustomAttributes.Add(dataMember);
                 }
 
                 t.IsSealed = true;
+                t.CustomAttributes.Add(dataContract);
             }
             a.Write(args[0]);
         }
