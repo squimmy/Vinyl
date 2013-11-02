@@ -3,6 +3,7 @@ using System.CodeDom.Compiler;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using NUnit.Framework;
 
 namespace Vinyl.Tests
@@ -76,6 +77,19 @@ namespace Vinyl.Tests
         {
             var person = testAssembly.GetType("Test.Person");
             Assert.IsTrue(person.IsSealed);
+        }
+
+        [Test()]
+        public void Classes_Are_Serializable()
+        {
+            var person = testAssembly.GetType("Test.Person");
+            var dataContract = person.GetCustomAttributes(typeof(DataContractAttribute), false);
+            CollectionAssert.IsNotEmpty(dataContract);
+
+            foreach (var field in person.GetFields()) {
+                var dataMember = field.GetCustomAttributes(typeof(DataMemberAttribute), false);
+                CollectionAssert.IsNotEmpty(dataMember);
+            }
         }
 
         [TearDown()]
