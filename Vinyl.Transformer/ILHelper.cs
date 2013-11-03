@@ -7,7 +7,9 @@ namespace Vinyl.Transformer
     {
         public static Instruction GetLoadArg(int index)
         {
-            if (index == 1)
+            if (index == 0)
+                return Instruction.Create(OpCodes.Ldarg_0);
+            else if (index == 1)
                 return Instruction.Create(OpCodes.Ldarg_1);
             else if (index == 2)
                 return Instruction.Create(OpCodes.Ldarg_2);

@@ -64,7 +64,7 @@ namespace Vinyl.Transformer
             var instructions = constructor.Body.Instructions;
             var assignmentInstructions = fields.Select((f, i) =>
                 new Instruction[] {
-                    Instruction.Create(OpCodes.Ldarg_0),
+                    ILHelper.GetLoadArg(0),
                     ILHelper.GetLoadArg(i + 1),
                     Instruction.Create(OpCodes.Stfld, f)
             });
