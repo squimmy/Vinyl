@@ -92,6 +92,16 @@ namespace Vinyl.Tests
             }
         }
 
+        [Test()]
+        public void Matching_Values_Have_Matching_HashCodes()
+        {
+            var person = testAssembly.GetType("Test.Person");
+            var instance1 = Activator.CreateInstance(person, new object[] {42, "Joe"});
+            var instance2 = Activator.CreateInstance(person, new object[] {42, "Joe"});
+
+            Assert.AreEqual(instance1.GetHashCode(), instance2.GetHashCode());
+        }
+
         [TearDown()]
         public void TearDown()
         {
